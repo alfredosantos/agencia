@@ -5,6 +5,10 @@ public abstract class Conta {
 	int agencia;
 	double saldo;
 	double limite;
+	
+	public Conta(int numero) {
+		setNumero(numero);
+	}
 	/**
 	 * @return the numero
 	 */

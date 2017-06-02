@@ -4,7 +4,6 @@ import br.com.ags.common.Cpf;
 import br.com.ags.common.Email;
 import br.com.ags.common.Rg;
 
-
 public class Pessoa {
 	String nome;
 	String dataNacimento;
@@ -12,6 +11,11 @@ public class Pessoa {
 	Cpf cpf;
 	Email email;
 	Rg rg;
+	
+	public Pessoa(String nome, Cpf cpf){
+		setCpf(cpf);
+		setNome(nome);
+	}
 	
 	public String getNome() {
 		return nome;
@@ -48,11 +52,6 @@ public class Pessoa {
 	}
 	public void setRg(Rg rg) {
 		this.rg = rg;
-	}
-	
-	public Pessoa(String nome, Cpf cpf){
-		setCpf(cpf);
-		setNome(nome);
 	}
 	
 	@Override

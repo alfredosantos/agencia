@@ -1,5 +1,6 @@
 package br.com.ags.bo;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
@@ -22,6 +23,15 @@ public class Agencia {
 		this.mapaPessoaConta = mapaPessoaConta;
 	}
 	
+	public void registrarPessoa(Pessoa p){
+		this.mapaPessoaConta.put(p, new ArrayList<>());
+	}
+	
+	public boolean clientePossuiConta(Pessoa pessoa , int numeroConta){
+		Optional<Conta> contaOp = mapaPessoaConta.get(pessoa).stream().filter(conta -> conta.getNumero() == numeroConta).findFirst();
+		return contaOp.isPresent();
+	}
+	
 	public Conta getConta(Pessoa pessoa, int numeroConta){
 		if ( mapaPessoaConta.get(pessoa) == null){
 			return null;
@@ -33,25 +43,14 @@ public class Agencia {
 	}
 	
 	public Boolean incluirConta(Pessoa pessoa, Conta conta){
-		if (getConta(pessoa, conta.getNumero()) == null){
+		if (clientePossuiConta(pessoa, conta.getNumero())){
 			return false;	
-		};
-		Optional<Conta> contaOp =  mapaPessoaConta.get(pessoa).stream().filter(contaUsu -> contaUsu.getNumero() == conta.getNumero()).findFirst();
-		
-		List<Conta> p = mapaPessoaConta.get(pessoa);
-		
-		if(p != null){
-			p.stream().filter(contaUsu -> contaUsu.getNumero() == conta.getNumero()).findFirst();
-		}
-		
-		if (contaOp.isPresent()){
-			return false;			
 		}else{
 			List<Conta> contas = mapaPessoaConta.get(pessoa);
 			contas.add(conta);
 			mapaPessoaConta.put(pessoa, contas);
 			return true;
-			}
+		}
 	}
 	
 	public Boolean depositoConta(Pessoa pessoa, int numeroConta, double valor){

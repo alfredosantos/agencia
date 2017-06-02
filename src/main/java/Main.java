@@ -76,34 +76,32 @@ public class Main {
     
     public static void inclusaoDeAgencia(Pessoa pessoa){
     	
-    	ContaCorrente contaCorrente = new ContaCorrente();
+    	ContaCorrente contaCorrente = new ContaCorrente(1);
 		contaCorrente.setAgencia(185);
-		contaCorrente.setNumero(1);
 		contaCorrente.setLimite(500);
 		
-		ContaCorrente contaCorrente2 = new ContaCorrente();
+		ContaCorrente contaCorrente2 = new ContaCorrente(2);
 		contaCorrente2.setAgencia(185);
-		contaCorrente2.setNumero(2);
+		
 		contaCorrente2.setLimite(1500);
 		
-		ContaPoupanca contaPoupanca = new ContaPoupanca();
+		ContaPoupanca contaPoupanca = new ContaPoupanca(3);
 		contaPoupanca.setAgencia(185);
 		contaPoupanca.setNumero(3);
 		contaPoupanca.setLimite(5400);
 		
-		ContaPoupanca contaPoupanca2 = new ContaPoupanca();
+		ContaPoupanca contaPoupanca2 = new ContaPoupanca(4);
 		contaPoupanca2.setAgencia(185);
-		contaPoupanca2.setNumero(4);
+		
 		contaPoupanca2.setLimite(5006);
 		
-		ContaPoupanca contaPoupanca3 = new ContaPoupanca();
+		ContaPoupanca contaPoupanca3 = new ContaPoupanca(5);
 		contaPoupanca3.setAgencia(185);
-		contaPoupanca3.setNumero(5);
+		
 		contaPoupanca3.setLimite(4500);
 		
-		ContaCorrente contaCorrente4 = new ContaCorrente();
+		ContaCorrente contaCorrente4 = new ContaCorrente(6);
 		contaCorrente4.setAgencia(185);
-		contaCorrente4.setNumero(6);
 		contaCorrente4.setLimite(7500);
 
 		HashMap<Pessoa, List<Conta>> mapaAgenciaPessoaConta = new HashMap<Pessoa, List<Conta>>();
