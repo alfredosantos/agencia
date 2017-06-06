@@ -28,14 +28,36 @@ public class Agencia {
 	}
 	
 	public boolean clientePossuiConta(Pessoa pessoa , int numeroConta){
-		Optional<Conta> contaOp = mapaPessoaConta.get(pessoa).stream().filter(conta -> conta.getNumero() == numeroConta).findFirst();
-		return contaOp.isPresent();
+		if (verificaSeTemPessoa(pessoa)){
+			return false;	
+		}
+		return true;
+	}
+
+	public Boolean verificaSeTemPessoa(Pessoa pessoa){
+		if ( mapaPessoaConta.get(pessoa) == null){
+			return false;
+		}
+		return true;
+	}
+	
+	public List<Conta> listaContasPessoa(Pessoa pessoa){
+		if (verificaSeTemPessoa(pessoa) == false){
+			return new ArrayList<>();
+		}
+		List<Conta> contaOp = mapaPessoaConta.get(pessoa);
+		return contaOp;
 	}
 	
 	public Conta getConta(Pessoa pessoa, int numeroConta){
-		if ( mapaPessoaConta.get(pessoa) == null){
+		if (verificaSeTemPessoa(pessoa) == false){
+			return null;	
+		}
+		
+		if (clientePossuiConta(pessoa, numeroConta) == false){
 			return null;
 		}
+		
 		Optional<Conta> contaOp = mapaPessoaConta.get(pessoa).stream().filter(conta -> conta.getNumero() == numeroConta).findFirst();
 		if (contaOp.isPresent())
 			return contaOp.get();
@@ -43,7 +65,7 @@ public class Agencia {
 	}
 	
 	public Boolean incluirConta(Pessoa pessoa, Conta conta){
-		if (clientePossuiConta(pessoa, conta.getNumero())){
+		if (verificaSeTemPessoa(pessoa) == false){
 			return false;	
 		}else{
 			List<Conta> contas = mapaPessoaConta.get(pessoa);
@@ -54,9 +76,13 @@ public class Agencia {
 	}
 	
 	public Boolean depositoConta(Pessoa pessoa, int numeroConta, double valor){
-		if (getConta(pessoa, numeroConta) == null){
-			return false;	
-		};
+		if (verificaSeTemPessoa(pessoa) == false){
+			return null;	
+		}
+		
+		if (clientePossuiConta(pessoa, numeroConta) == false){
+			return null;
+		}
 		Optional<Conta> contaOp =  mapaPessoaConta.get(pessoa).stream().filter(conta -> conta.getNumero() == numeroConta).findFirst();
 		if (contaOp.isPresent()){
 			contaOp.get().depositarValor(valor);
@@ -67,17 +93,25 @@ public class Agencia {
 	}
 	
 	public Boolean removerConta(Pessoa pessoa, int numeroConta){
-		if (getConta(pessoa, numeroConta) == null){
-			return false;	
-		};
+		if (verificaSeTemPessoa(pessoa) == false){
+			return null;	
+		}
+		
+		if (clientePossuiConta(pessoa, numeroConta) == false){
+			return null;
+		}
 		List<Conta> contas = mapaPessoaConta.get(pessoa);
 		return contas.removeIf(conta -> conta.getNumero() == numeroConta);
 	}
 	
 	public Boolean saqueConta(Pessoa pessoa, int numeroConta, double valor) throws Exception{
-		if (getConta(pessoa, numeroConta) == null){
-			return false;	
-		};
+		if (verificaSeTemPessoa(pessoa) == false){
+			return null;	
+		}
+		
+		if (clientePossuiConta(pessoa, numeroConta) == false){
+			return null;
+		}
 		Optional<Conta> contaOp =  mapaPessoaConta.get(pessoa).stream().filter(conta -> conta.getNumero() == numeroConta).findFirst();
 		if (contaOp.isPresent()){
 			contaOp.get().saque(valor);
