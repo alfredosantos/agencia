@@ -58,7 +58,11 @@ public abstract class Conta {
 		this.limite = limite;
 	}
 	
-	public void depositarValor(double valor) {
+	public void depositarValor(double valor) throws Exception {
+		double saque;
+		if (valor <= 0) {
+			throw new Exception("Valor do depósito menor que 0");
+		}
 		double valorNovo;
 		valorNovo = this.getSaldo() + valor;
 		this.setSaldo(valorNovo);
@@ -67,6 +71,9 @@ public abstract class Conta {
 	
 	public Double saque(double valor) throws Exception{
 		double saque;
+		if (valor <= 0) {
+			throw new Exception("Valor saque menor que 0");
+		}
 		if (getSaldo() + getLimite() >= valor){
 			saque = getSaldo() - valor;
 			setSaldo(saque);

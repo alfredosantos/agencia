@@ -36,6 +36,12 @@ public class AgenciaTest {
 	}
 
 	@Test
+	public void depositoNegativoConta() throws Exception{
+		agencia.depositoConta(pessoa, 5, -700);
+		System.out.println(agencia.getConta(pessoa, 5).getSaldo());
+		equals("Valor do depósito menor que 0");
+	}
+	@Test
 	public void removerConta() throws Exception{
 		agencia.removerConta(pessoa, 5);
 		assertNull(agencia.getConta(pessoa, 5));
