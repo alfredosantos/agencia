@@ -59,14 +59,12 @@ public abstract class Conta {
 	}
 	
 	public void depositarValor(double valor) throws Exception {
-		double saque;
 		if (valor <= 0) {
 			throw new Exception("Valor do depósito menor que 0");
 		}
 		double valorNovo;
 		valorNovo = this.getSaldo() + valor;
 		this.setSaldo(valorNovo);
-		
 	}
 	
 	public Double saque(double valor) throws Exception{

@@ -8,7 +8,7 @@ public class Rg {
 	}
 
 	public void setRg(String rg) {
-		rg = rg;
+		this.rg = rg;
 	}
 
 	private Rg (String rg){

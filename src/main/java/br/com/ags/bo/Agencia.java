@@ -3,7 +3,6 @@ package br.com.ags.bo;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Optional;
 
 public class Agencia {
 
@@ -29,8 +28,9 @@ public class Agencia {
 	}
 
 	public boolean clientePossuiConta(Pessoa pessoa, int numeroConta) {
-		if (existePessoa(pessoa)){
-			return mapaPessoaConta.get(pessoa).stream().filter(conta -> conta.getNumero() == numeroConta).findFirst() != null;
+		if (existePessoa(pessoa)) {
+			return mapaPessoaConta.get(pessoa).stream().filter(conta -> conta.getNumero() == numeroConta)
+					.findFirst() != null;
 		}
 		return false;
 	}
@@ -56,7 +56,7 @@ public class Agencia {
 	}
 
 	public Boolean incluirConta(Pessoa pessoa, Conta conta) {
-		if (existePessoa(pessoa)) {
+		if (clientePossuiConta(pessoa, conta.getNumero())) {
 			List<Conta> contas = mapaPessoaConta.get(pessoa);
 			contas.add(conta);
 			mapaPessoaConta.put(pessoa, contas);
@@ -67,8 +67,7 @@ public class Agencia {
 
 	public Boolean depositoConta(Pessoa pessoa, int numeroConta, double valor) throws Exception {
 		if ((clientePossuiConta(pessoa, numeroConta))) {
-			getConta( pessoa, numeroConta).depositarValor(valor);
-
+			getConta(pessoa, numeroConta).depositarValor(valor);
 			return true;
 		} else {
 			return false;
@@ -76,29 +75,17 @@ public class Agencia {
 	}
 
 	public Boolean removerConta(Pessoa pessoa, int numeroConta) {
-		if (existePessoa(pessoa) == false) {
-			return null;
+		if (clientePossuiConta(pessoa, numeroConta)) {
+			List<Conta> contas = mapaPessoaConta.get(pessoa);
+			return contas.removeIf(conta -> conta.getNumero() == numeroConta);
 		}
-
-		if (clientePossuiConta(pessoa, numeroConta) == false) {
-			return null;
-		}
-		List<Conta> contas = mapaPessoaConta.get(pessoa);
-		return contas.removeIf(conta -> conta.getNumero() == numeroConta);
+		return false;
 	}
 
 	public Boolean saqueConta(Pessoa pessoa, int numeroConta, double valor) throws Exception {
-		if (existePessoa(pessoa) == false) {
-			return null;
-		}
-
-		if (clientePossuiConta(pessoa, numeroConta) == false) {
-			return null;
-		}
-		Optional<Conta> contaOp = mapaPessoaConta.get(pessoa).stream().filter(conta -> conta.getNumero() == numeroConta)
-				.findFirst();
-		if (contaOp.isPresent()) {
-			contaOp.get().saque(valor);
+		if (clientePossuiConta(pessoa, numeroConta)) {
+			mapaPessoaConta.get(pessoa).stream().filter(conta -> conta.getNumero() == numeroConta)
+				.findFirst().get().saque(valor);
 			return true;
 		} else {
 			return false;

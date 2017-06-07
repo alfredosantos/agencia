@@ -74,7 +74,7 @@ public class Main {
     	}
     }
     
-    public static void inclusaoDeAgencia(Pessoa pessoa){
+    public static void inclusaoDeAgencia(Pessoa pessoa) throws Exception{
     	
     	ContaCorrente contaCorrente = new ContaCorrente(1);
 		contaCorrente.setAgencia(185);

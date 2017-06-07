@@ -3,6 +3,7 @@ package br.com.ags.bo.test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -37,15 +38,19 @@ public class AgenciaTest {
 
 	@Test
 	public void depositoNegativoConta() throws Exception{
-		agencia.depositoConta(pessoa, 5, -700);
-		System.out.println(agencia.getConta(pessoa, 5).getSaldo());
-		equals("Valor do depósito menor que 0");
+		try{					
+			agencia.depositoConta(pessoa, 5, -700);
+			assertEquals(null, agencia.clientePossuiConta(pessoa, 5));
+		}catch(Exception e){
+			assertTrue("Valor do depósito menor que 0",e instanceof Exception); 
+		}
 	}
+	
 	@Test
 	public void removerConta() throws Exception{
 		agencia.removerConta(pessoa, 5);
-		assertNull(agencia.getConta(pessoa, 5));
 
+		assertTrue(null, true);
 	}
 	
 	@Test
@@ -53,6 +58,5 @@ public class AgenciaTest {
 		agencia.depositoConta(pessoa, 5, 1000);
 		agencia.saqueConta(pessoa, 5, 900);
 		assertEquals(100, agencia.getConta(pessoa, 5).getSaldo(),0.000001);
-
 	}
 }
