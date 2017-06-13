@@ -12,7 +12,6 @@ import br.com.ags.bo.ContaPoupanca;
 public class ContaTest {
 	@Before
 	public void init() throws Exception{
-
 		ContaPoupanca contaPoupanca = new ContaPoupanca(132);
 		contaPoupanca.setLimite(400);
 	}
